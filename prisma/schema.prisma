@@ -2,16 +2,17 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["mongoDb"]
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
 model User {
-  id           String   @id @default(uuid())
+  id           String   @id @default(dbgenerated()) @map("_id") @db.ObjectId
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
   username     String   @unique
@@ -20,7 +21,7 @@ model User {
 }
 
 model Joke {
-  id         String   @id @default(uuid())
+  id         String   @id @default(dbgenerated()) @map("_id") @db.ObjectId
   jokesterId String
   jokester   User     @relation(fields: [jokesterId], references: [id], onDelete: Cascade)
   createdAt  DateTime @default(now())

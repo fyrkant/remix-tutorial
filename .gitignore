@@ -7,3 +7,5 @@ node_modules
 /prisma/dev.db
 /prisma/dev.db-journal
 .env
+# Local Netlify folder
+.netlify
